@@ -36,7 +36,10 @@ const UsersChema = new Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: {
+      createdAt: "creado_el",
+      updatedAt: "modificado_el",
+    },
   },
 );
 export default model("User", UsersChema);
