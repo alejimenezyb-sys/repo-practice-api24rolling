@@ -63,4 +63,9 @@ UsersChema.methods.generateVerificationCode = function () {
   return code;
 };
 
+//método para comparar las password
+UsersChema.methods.comparePassword = function (userPassword) {
+  return bcrypt.compareSync(userPassword, this.password);
+};
+
 export default model("User", UsersChema);
