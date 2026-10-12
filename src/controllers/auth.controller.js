@@ -1,10 +1,10 @@
 import User from "../models/User.js";
-
+import { sendVerificationEmail } from "../config/nodemailer.js";
 const getUsers = async (req, res) => {
   const users = await User.find();
 
   res.json({
-    msg: "Todo bien",
+    ok: true,
     users,
   });
 };
@@ -19,11 +19,14 @@ const register = async (req, res) => {
     });
 
     //Generar el código de verificación
-
+    const verificationCode = user.generateVerificationCode();
+    console.log(verificationCode);
     //Guardar el usuario
 
     await user.save();
 
+    //enviar mail de verificación
+    await sendVerificationEmail(email, username, verificationCode);
     //mandar respuesta
 
     return res.status(201).json({
@@ -38,4 +41,25 @@ const register = async (req, res) => {
     });
   }
 };
-export { getUsers, register };
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }).select("password");
+
+    if (!user) {
+      return res.status(401).json({
+        ok: false,
+        message: "Credenciales incorrectas",
+      });
+    }
+
+    //chequear que el password coincida
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      error: error.message,
+    });
+  }
+};
+export { getUsers, register, login };
