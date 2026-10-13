@@ -77,6 +77,14 @@ const login = async (req, res) => {
 
     const token = generateToken(user._id);
     //Guardar token en cookies
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 1000,
+    };
+
+    res.cookie("token", token, cookieOptions);
 
     //Iniciar sesión
     return res.status(200).json({
