@@ -25,5 +25,25 @@ export const registerValidation = () => [
         throw new Error("El usuario ya existe");
       }
     }),
+  //validación email
+  check("email")
+    .isEmail()
+    .withMessage("Ingresá un email válido")
+    .custom(async (value) => {
+      const user = await User.findOne({ email: value });
+      if (user) {
+        throw new Error("El email ya existe");
+      }
+    })
+    .normalizeEmail(),
+
+  //validar password
+  check("password")
+    .isLength({ min: 6, max: 30 })
+    .withMessage("La contraseña debe tener como mínimo 6 caracteres")
+    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
+    .withMessage(
+      "La contraseña debe tener al menos 8 caracteres, una letra y un número",
+    ),
   handleValidationErrors,
 ];
