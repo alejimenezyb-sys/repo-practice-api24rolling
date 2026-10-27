@@ -38,12 +38,35 @@ export const registerValidation = () => [
     .normalizeEmail(),
 
   //validar password
+  // check("password")
+  //   .isLength({ min: 6, max: 30 })
+  //   .withMessage("La contraseña debe tener como mínimo 6 caracteres")
+  //   .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
+  //   .withMessage(
+  //     "La contraseña debe tener al menos 8 caracteres, una letra y un número",
+  //   ),
+  // handleValidationErrors,
+];
+
+//Validar login
+export const loginValidation = () => [
+  check("email")
+    .trim()
+    .isEmail()
+    .withMessage("Ingresá un email válido")
+    .normalizeEmail(),
+  check("password").notEmpty().withMessage("La contraseña es requerida"),
+  // handleValidationErrors,
+];
+
+export const validationPassword = () => [
   check("password")
-    .isLength({ min: 6, max: 30 })
+    .isLength({ min: 8, max: 30 })
     .withMessage("La contraseña debe tener como mínimo 6 caracteres")
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
+    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
     .withMessage(
       "La contraseña debe tener al menos 8 caracteres, una letra y un número",
+      // handleValidationErrors,
     ),
-  handleValidationErrors,
 ];
+//validar código email
