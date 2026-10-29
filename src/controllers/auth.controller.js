@@ -180,7 +180,23 @@ const logOut = (req, res) => {
 
 const getProfile = (req, res) => {
   try {
-  } catch (error) {}
+    const { username, email, role, emailVerified } = req.user;
+
+    res.status(200).json({
+      ok: true,
+      perfil: {
+        username,
+        email,
+        role,
+        emailVerified,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      error: Error.message,
+    });
+  }
 };
 
-export { getUsers, register, login, verifyEmail, logOut };
+export { getUsers, register, login, verifyEmail, logOut, getProfile };

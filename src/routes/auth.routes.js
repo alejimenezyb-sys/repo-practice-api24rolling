@@ -1,6 +1,7 @@
 import { Router } from "express";
 import User from "../models/User.js";
 import {
+  getProfile,
   getUsers,
   login,
   logOut,
@@ -36,5 +37,5 @@ router.post("/verify-email", verifyEmailValidation(), verifyEmail);
 //rutas protegidas
 router.get("/", authenticate, getUsers);
 router.post("/logout", authenticate, logOut);
-router.get("/profile", authenticate, () => {});
+router.get("/profile", authenticate, getProfile);
 export default router;
