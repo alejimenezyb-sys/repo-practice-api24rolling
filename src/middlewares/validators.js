@@ -29,13 +29,13 @@ export const registerValidation = () => [
   check("email")
     .isEmail()
     .withMessage("Ingresá un email válido")
+    .normalizeEmail({ gmail_remove_dots: false })
     .custom(async (value) => {
       const user = await User.findOne({ email: value });
       if (user) {
         throw new Error("El email ya existe");
       }
-    })
-    .normalizeEmail(),
+    }),
 
   //validar password
   // check("password")
@@ -54,7 +54,7 @@ export const loginValidation = () => [
     .trim()
     .isEmail()
     .withMessage("Ingresá un email válido")
-    .normalizeEmail(),
+    .normalizeEmail({ gmail_remove_dots: false }),
   check("password").notEmpty().withMessage("La contraseña es requerida"),
   // handleValidationErrors,
 ];
@@ -70,3 +70,27 @@ export const validationPassword = () => [
     ),
 ];
 //validar código email
+export const verifyEmailValidation = () => [
+  check("code")
+    .notEmpty()
+    .withMessage("El código de verificación es necesario")
+    .trim()
+    .isNumeric()
+    .withMessage("El código debe ser un número")
+    .isLength({ min: 6, max: 6 })
+    .withMessage("El código debe tener 6 dígitos"),
+  check("email")
+    .notEmpty()
+    .withMessage("El correo es requerido")
+    .trim()
+    .isEmail()
+    .withMessage("Ingresá un email válido")
+    .normalizeEmail({ gmail_remove_dots: false })
+    .custom(async (value) => {
+      const user = await User.findOne({ email: value });
+      if (user.emailVerified) {
+        throw new Error("El email ya está verificado");
+      }
+    }),
+  handleValidationErrors,
+];

@@ -21,7 +21,6 @@ const register = async (req, res) => {
 
     //Generar el código de verificación
     const verificationCode = user.generateVerificationCode();
-    console.log(verificationCode);
     //Guardar el usuario
 
     await user.save();
@@ -155,4 +154,33 @@ const verifyEmail = async (req, res) => {
   }
 };
 
-export { getUsers, register, login, verifyEmail };
+//cerrar sesión
+
+const logOut = (req, res) => {
+  const token = req.cookies?.token;
+  if (!token) {
+    return res.status(400).json({
+      ok: false,
+      message: "La sesión no fue iniciada",
+    });
+  }
+
+  //limpiar las cookies, ya que esta sería la idea del logout
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "lax",
+  });
+  return res.status(200).json({
+    ok: true,
+    message: "Sesión cerrada con éxito!!",
+  });
+};
+//ver perfil del usuario
+
+const getProfile = (req, res) => {
+  try {
+  } catch (error) {}
+};
+
+export { getUsers, register, login, verifyEmail, logOut };
