@@ -6,6 +6,7 @@ import {
   login,
   logOut,
   register,
+  updatePassword,
   verifyEmail,
 } from "../controllers/auth.controller.js";
 import { authenticate } from "../middlewares/auth.js";
@@ -38,4 +39,16 @@ router.post("/verify-email", verifyEmailValidation(), verifyEmail);
 router.get("/", authenticate, getUsers);
 router.post("/logout", authenticate, logOut);
 router.get("/profile", authenticate, getProfile);
+
+//actualizar contraseña
+router.put(
+  "/password",
+  loginValidation(),
+  validationPassword(),
+  handleValidationErrors,
+  updatePassword,
+);
+
+//reenviar código de verificación
+
 export default router;

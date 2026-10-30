@@ -199,4 +199,43 @@ const getProfile = (req, res) => {
   }
 };
 
-export { getUsers, register, login, verifyEmail, logOut, getProfile };
+const updatePassword = async (req, res) => {
+  const { email, password } = req.body;
+
+  //email existe¿?
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(400).json({
+      ok: false,
+      message: "No existe el usuario",
+    });
+  }
+  //existe mail, email verificado¿?
+  if (!user.emailVerified) {
+    return res.status(400).json({
+      ok: false,
+      message: "El email no está verificado",
+    });
+  }
+
+  //enviar un mail con instrucciones
+  //actualiza contraseña
+  user.password = password;
+  await user.save();
+  return res.status(200).json({
+    ok: true,
+    message: "Contraseña actualizada",
+    password: user.password,
+  });
+};
+
+export {
+  getUsers,
+  register,
+  login,
+  verifyEmail,
+  logOut,
+  getProfile,
+  updatePassword,
+};
