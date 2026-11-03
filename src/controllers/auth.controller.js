@@ -229,6 +229,33 @@ const updatePassword = async (req, res) => {
     password: user.password,
   });
 };
+const resendVerificationCodeEmail = async (req, res) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(404).json({
+      ok: false,
+      message: "El correo electrónico no es válido",
+    });
+  }
+  const verificationCode = user.generateVerificationCode();
+
+  try {
+    await sendVerificationEmail(user.email, user.username, verificationCode);
+    return res.status(200).json({
+      ok: true,
+      message: "Se envió un nuevo código de verificación",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      message: "Error al enviar el email",
+      error,
+    });
+  }
+};
 
 export {
   getUsers,
@@ -238,4 +265,5 @@ export {
   logOut,
   getProfile,
   updatePassword,
+  resendVerificationCodeEmail,
 };

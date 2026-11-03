@@ -6,6 +6,7 @@ import {
   login,
   logOut,
   register,
+  resendVerificationCodeEmail,
   updatePassword,
   verifyEmail,
 } from "../controllers/auth.controller.js";
@@ -50,5 +51,5 @@ router.put(
 );
 
 //reenviar código de verificación
-
+router.post("/resend", loginValidation(), resendVerificationCodeEmail);
 export default router;

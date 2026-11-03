@@ -36,16 +36,6 @@ export const registerValidation = () => [
         throw new Error("El email ya existe");
       }
     }),
-
-  //validar password
-  // check("password")
-  //   .isLength({ min: 6, max: 30 })
-  //   .withMessage("La contraseña debe tener como mínimo 6 caracteres")
-  //   .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/)
-  //   .withMessage(
-  //     "La contraseña debe tener al menos 8 caracteres, una letra y un número",
-  //   ),
-  // handleValidationErrors,
 ];
 
 //Validar login
@@ -55,18 +45,17 @@ export const loginValidation = () => [
     .isEmail()
     .withMessage("Ingresá un email válido")
     .normalizeEmail({ gmail_remove_dots: false }),
-  check("password").notEmpty().withMessage("La contraseña es requerida"),
-  // handleValidationErrors,
 ];
 
 export const validationPassword = () => [
   check("password")
+    .notEmpty()
+    .withMessage("La contraseña es requerida")
     .isLength({ min: 8, max: 30 })
     .withMessage("La contraseña debe tener como mínimo 6 caracteres")
     .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
     .withMessage(
       "La contraseña debe tener al menos 8 caracteres, una letra y un número",
-      // handleValidationErrors,
     ),
 ];
 //validar código email
