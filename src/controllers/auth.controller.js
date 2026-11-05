@@ -240,6 +240,13 @@ const resendVerificationCodeEmail = async (req, res) => {
       message: "El correo electrónico no es válido",
     });
   }
+
+  if (user.emailVerified) {
+    return res.status(400).json({
+      ok: false,
+      message: "El email ya está verificado",
+    });
+  }
   const verificationCode = user.generateVerificationCode();
 
   await user.save();
