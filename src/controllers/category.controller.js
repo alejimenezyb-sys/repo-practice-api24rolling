@@ -1,7 +1,10 @@
 import Categoria from "../models/category.js";
 
 const getCategories = async (req, res) => {
-  const categorias = await Categoria.find({ estado: true });
+  const categorias = await Categoria.find({ estado: true }).populate(
+    "usuario",
+    "username email role",
+  );
   const totalCategorias = await Categoria.countDocuments({ estado: true });
 
   return res.status(200).json({
