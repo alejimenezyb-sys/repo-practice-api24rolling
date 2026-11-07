@@ -44,6 +44,49 @@ const addCategory = async (req, res) => {
   }
 };
 //put
+const updateCategory = async (req, res) => {
+  const { id } = req.params;
+  const nombre = req.body.nombre.toUpperCase();
+
+  const existeCategoria = await Categoria.findById(id);
+
+  if (!existeCategoria) {
+    return res.status(400).json({
+      ok: false,
+      message: `El id ${id} No existe`,
+    });
+  }
+  const validarNombreCategoria = await Categoria.findOne({ nombre });
+
+  if (validarNombreCategoria) {
+    return res.status(400).json({
+      ok: false,
+      message: `Ya existe una categoria ${nombre}`,
+    });
+  }
+  //si estado en false, x categoria no está activa
+  if (!existeCategoria.estado) {
+    return res.status(400).json({
+      ok: false,
+      message: `La categoria ${id} No está activa`,
+    });
+  }
+
+  const datos = {
+    nombre,
+    usuario: req.user._id,
+  };
+
+  const categoria = await Categoria.findByIdAndUpdate(id, datos, {
+    returnDocument: "after",
+  });
+
+  res.status(200).json({
+    ok: true,
+    message: "Categoria actualizada con éxito!",
+    categoria,
+  });
+};
 //delete
 
-export { getCategories, addCategory };
+export { getCategories, addCategory, updateCategory };
