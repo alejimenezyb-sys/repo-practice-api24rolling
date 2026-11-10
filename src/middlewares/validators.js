@@ -97,3 +97,13 @@ export const validarRolAdmin = (req, res, next) => {
   }
   next();
 };
+
+//validar categoría por su id
+
+export const validarCategoriaId = async (id) => {
+  const existeCategoria = await Categoria.findById(id);
+
+  if (!existeCategoria) {
+    throw new Error("No existe una categoría con ese id");
+  }
+};

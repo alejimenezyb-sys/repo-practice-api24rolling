@@ -50,12 +50,6 @@ const updateCategory = async (req, res) => {
 
   const existeCategoria = await Categoria.findById(id);
 
-  if (!existeCategoria) {
-    return res.status(400).json({
-      ok: false,
-      message: `El id ${id} No existe`,
-    });
-  }
   const validarNombreCategoria = await Categoria.findOne({ nombre });
 
   if (validarNombreCategoria) {
@@ -94,12 +88,6 @@ const deleteCategory = async (req, res) => {
 
   const existeCategoria = await Categoria.findById(id);
 
-  if (!existeCategoria) {
-    return res.status(400).json({
-      ok: false,
-      message: `El id ${id} No existe`,
-    });
-  }
   if (!existeCategoria.estado) {
     return res.status(400).json({
       ok: false,

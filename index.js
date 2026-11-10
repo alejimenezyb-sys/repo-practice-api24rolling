@@ -13,6 +13,8 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use("/api/category", categoryRoutes);
+//ruta de producto
+
 await dbConnect();
 
 app.listen(PORT, () => console.log(`✅ Server online en puerto ${PORT}`));

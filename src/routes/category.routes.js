@@ -10,6 +10,7 @@ import { authenticate } from "../middlewares/auth.js";
 import {
   handleValidationErrors,
   validarRolAdmin,
+  validarCategoriaId,
 } from "../middlewares/validators.js";
 
 const router = Router();
@@ -31,6 +32,7 @@ router.put(
     validarRolAdmin,
     check("id").isMongoId().withMessage("El id debe ser válido"),
     check("nombre").notEmpty().withMessage("El nombre es obligatorio"),
+    check("id").custom(validarCategoriaId),
     handleValidationErrors,
   ],
   updateCategory,
@@ -41,6 +43,7 @@ router.delete(
     authenticate,
     validarRolAdmin,
     check("id").isMongoId().withMessage("El id debe ser válido"),
+    check("id").custom(validarCategoriaId),
     handleValidationErrors,
   ],
   deleteCategory,
