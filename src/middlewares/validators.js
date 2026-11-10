@@ -83,3 +83,17 @@ export const verifyEmailValidation = () => [
     }),
   handleValidationErrors,
 ];
+
+//validar rol admin
+
+export const validarRolAdmin = (req, res, next) => {
+  const rol = req.user.role;
+
+  if (rol !== "admin") {
+    return res.status(401).json({
+      ok: false,
+      message: "No está autorizado para esta acción",
+    });
+  }
+  next();
+};
