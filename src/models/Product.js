@@ -1,5 +1,4 @@
 import { Schema, model } from "mongoose";
-import { defaultMaxListeners } from "nodemailer/lib/xoauth2";
 
 const ProductoSchema = Schema({
   nombre: {

@@ -1,4 +1,4 @@
-import Producto from "../models/Product";
+import Producto from "../models/Product.js";
 
 const obtenerProductos = async () => {
   //paginación

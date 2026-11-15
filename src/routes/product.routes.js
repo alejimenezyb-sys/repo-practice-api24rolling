@@ -5,12 +5,12 @@ import {
   borrarProducto,
   crearProducto,
   obtenerProductos,
-} from "../controllers/product.controller";
-import { authenticate } from "../middlewares/auth";
+} from "../controllers/product.controller.js";
+import { authenticate } from "../middlewares/auth.js";
 import {
   handleValidationErrors,
   validarRolAdmin,
-} from "../middlewares/validators";
+} from "../middlewares/validators.js";
 
 const router = Router();
 
@@ -32,3 +32,5 @@ router.post(
 );
 router.put("/:id", [], actualizarProducto);
 router.delete("/:id", [], borrarProducto);
+
+export default router;

@@ -41,7 +41,7 @@ const CartSchema = new Schema(
 
 CartSchema.methods.calcularTotal = function () {
   this.total = this.items.reduce(
-    (accum, item) => accum + item.precioUnitario + item.cantidad,
+    (accum, item) => accum + item.precioUnitario * item.cantidad,
     0,
   );
   return this.total;
