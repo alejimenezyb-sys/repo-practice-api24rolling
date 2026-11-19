@@ -5,10 +5,11 @@ import {
   handleValidationErrors,
   validarProductoId,
 } from "../middlewares/validators.js";
+import { getItems } from "../controllers/cart.controller.js";
 
 const router = Router();
 
-router.get("/", authenticate, () => {});
+router.get("/", authenticate, getItems);
 router.post(
   "/",
   [
