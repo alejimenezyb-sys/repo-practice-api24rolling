@@ -1,6 +1,6 @@
 import Producto from "../models/Product.js";
 
-const obtenerProductos = async () => {
+const obtenerProductos = async (req, res) => {
   //paginación
 
   try {

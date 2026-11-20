@@ -5,7 +5,7 @@ import {
   handleValidationErrors,
   validarProductoId,
 } from "../middlewares/validators.js";
-import { getItems } from "../controllers/cart.controller.js";
+import { addItem, getItems } from "../controllers/cart.controller.js";
 
 const router = Router();
 
@@ -14,14 +14,14 @@ router.post(
   "/",
   [
     authenticate,
-    check("productId").custom(validarProductoId),
+    check("productoId").custom(validarProductoId),
     check("cantidad")
       .notEmpty()
       .withMessage("La cantidad no puede estar vacia")
       .isInt({ min: 1 }),
+    handleValidationErrors,
   ],
-  handleValidationErrors,
-  () => {},
+  addItem,
 );
 router.put(
   "/:productId",
